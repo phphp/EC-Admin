@@ -27,7 +27,7 @@ Route::post('/admin', [
 ]);
 
 
-Route::get('/dashboard', [
+Route::get('/admin/dashboard', [
     'middleware'    => ['auth:admin'],
     'as'            => 'dashboard',
     'uses'          => 'DashboardController@index'
