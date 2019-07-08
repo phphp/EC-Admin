@@ -15,20 +15,27 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// 登录页
 Route::get('/admin', [
     'middleware'    => ['guest:admin'],
     'as'            => 'admin.login.page',
     'uses'          => 'AdminLoginController@showLoginForm'
 ]);
+// 登录验证页
 Route::post('/admin', [
     'middleware'    => ['guest:admin'], // 已经自带了 hasTooManyLoginAttempts
     'as'            => 'admin.login',
     'uses'          => 'AdminLoginController@login'
 ]);
 
-
-Route::get('/admin/dashboard', [
-    'middleware'    => ['auth:admin'],
-    'as'            => 'dashboard',
-    'uses'          => 'DashboardController@index'
-]);
+// 后台功能
+Route::group([
+    'prefix' 		=> 'admin',
+    'middleware'    => ['auth:admin']
+], function () {
+    // 后台首页
+    Route::get('dashboard', [
+        'as'			=> 'dashboard',
+        'uses' 			=> 'DashboardController@index'
+    ]);
+});

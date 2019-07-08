@@ -156,7 +156,7 @@
                         </div>
 
                         <div class="custom-control custom-checkbox mb-3">
-                            <input type="checkbox" class="custom-control-input" id="customCheck1" checked="checked">
+                            <input type="checkbox" name="remember" class="custom-control-input" id="customCheck1" checked="checked">
                             <label class="custom-control-label" for="customCheck1">记住我</label>
                         </div>
                         <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit">登录</button>
