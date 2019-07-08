@@ -18,7 +18,8 @@ class RedirectIfAuthenticated
     public function handle($request, Closure $next, $guard = null)
     {
         if (Auth::guard($guard)->check()) {
-            return redirect('/home');
+            // guest 中间件已登录用户跳转地址
+            return redirect(route('dashboard'));
         }
 
         return $next($request);
