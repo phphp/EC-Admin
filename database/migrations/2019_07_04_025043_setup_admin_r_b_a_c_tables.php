@@ -18,7 +18,7 @@ class SetupAdminRBACTables extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
-            $table->string('avatar')->default('default');
+            $table->string('avatar')->default('uploads/avatars/default');
             $table->rememberToken();
             $table->timestamps();
         });

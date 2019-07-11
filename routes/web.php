@@ -38,4 +38,10 @@ Route::group([
         'as'			=> 'dashboard',
         'uses' 			=> 'DashboardController@index'
     ]);
+
+    // 管理员
+    Route::resource('admins', 'AdminController', ['only' => [
+        'index', 'create', 'store', 'show', 'edit', 'update', 'destroy'
+    ]]);
+
 });
