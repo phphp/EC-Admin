@@ -44,9 +44,9 @@ class AdminController extends Controller
             'email'         => 'required|string|email|max:255|unique:admins',
             'password'      => 'required|min:6|max:60',
             // 'roles.*'       => 'integer|distinct|exists:roles,id',
-            'avatarL'       => 'nullable|image_base64|max:200000', // base64 的大小约为图片的 4/3，大约允许 200kb 的上传文件
-            'avatarM'       => 'nullable|image_base64|max:150000',
-            'avatarS'       => 'nullable|image_base64|max:100000',
+            'avatarL'       => 'nullable|image_base64|max:100000', // base64 的大小约为图片的 4/3，大约允许 100kb 的上传文件
+            'avatarM'       => 'nullable|image_base64|max:750000',
+            'avatarS'       => 'nullable|image_base64|max:500000',
         ]);
 
         // 创建用户
@@ -82,9 +82,9 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Admin $admin)
     {
-        //
+        return view('admin/admin/edit', compact('admin'));
     }
 
     /**
@@ -94,9 +94,36 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Admin $admin)
     {
-        //
+        $this->validate($request, [
+            'name'          => 'required|string|max:255|unique:admins,name,'.$admin->id,
+            'email'         => 'required|string|email|max:255|unique:admins,email,'.$admin->id,
+            'password'      => 'nullable|min:6|max:60',
+            // 'roles.*'       => 'integer|distinct|exists:roles,id',
+            'avatarL'       => 'nullable|image_base64|max:100000',
+            'avatarM'       => 'nullable|image_base64|max:750000',
+            'avatarS'       => 'nullable|image_base64|max:500000',
+        ]);
+        // $admin = Admin::findOrFail($id);
+        // $this->bcryptInputPassword($request);
+
+        // 是否更新密码
+        if ( $request->filled('password') )
+            $request->merge(['password' => bcrypt($request->password)]);
+        else
+            $request->offsetUnset('password');
+
+        $admin->fill($request->input());
+
+        if ( $request->filled('avatarL') && $request->filled('avatarM') && $request->filled('avatarS') )
+            $admin->avatar = Avatar::saveAvatar($admin->id, 'uploads/avatars/admin');
+
+        $admin->save();
+
+        // $admin->roles()->sync($request->roles); // 更新关联数据
+
+        return json( $admin, 201 );
     }
 
     /**
@@ -107,6 +134,24 @@ class AdminController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $admin = Admin::findOrFail($id);
+        $admin->delete();
+        // 删除头像事件
+        return redirect()->route('admins.index')->with('message', '删除成功');
+    }
+
+    /**
+     * 加密表单中的 password 字段，password 为空，则从 $request 中剔除它
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Request 剔除或加密 password 后的 $request
+     */
+    private function bcryptInputPassword($request)
+    {
+        if ( $request->filled('password') )
+            $request->merge(['password' => bcrypt($request->password)]);
+        else
+            $request->offsetUnset('password');
+
+        return $request;
     }
 }

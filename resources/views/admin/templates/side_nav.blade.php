@@ -1,6 +1,6 @@
 <nav class="col-md-2 d-none d-md-block bg-light" id="side-nav">
 
-<a class="nav-link active" data-toggle="collapse" href="{{ route('dashboard') }}"><i class="iconfont icon-home"></i> 控制台</a>
+<a class="nav-link active" href="{{ route('dashboard') }}"><i class="iconfont icon-home"></i> 控制台</a>
 
 <a class="nav-link" data-toggle="collapse" href="#nav-admin"><i class="iconfont icon-user-group-fill"></i> 管理员</a>
 <div id="nav-admin" class="collapse in">

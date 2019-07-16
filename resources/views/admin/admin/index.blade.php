@@ -41,11 +41,11 @@
                 @foreach ($admins as $admin)
                 <tr>
                     <th scope="row">{{ $admin->id }}</th>
-                    <td><a href="">{{ $admin->name }}</a></td>
+                    <td><a href="{{ route('admins.edit', ['id'=>$admin->id]) }}">{{ $admin->name }}</a></td>
                     <td>{{ $admin->email }}</td>
                     <td><img class="rounded-sm" src="{{ url($admin->avatar.'/s.jpg') }}"></td>
                     <td>
-                        <a href="" class="float-left mr-1">
+                        <a href="{{ route('admins.edit', ['id'=>$admin->id]) }}" class="float-left mr-1">
                             <button class="btn btn-primary btn-sm"><i class="iconfont icon-edit"></i></button>
                         </a>
                         <button class="btn btn-danger btn-sm float-left"

@@ -30,7 +30,7 @@
                 @include('admin/templates/side_nav')
 
                 <!-- 主体 -->
-                <main role="main" class="col-md-9 ml-sm-auto col-md-10 pt-3 px-4">
+                <main role="main" class="col-md-9 ml-sm-auto col-md-10 pt-3 px-4 pb-4" style="min-height: 800px">
 
                     <!-- 消息 -->
                     <div class="container">
