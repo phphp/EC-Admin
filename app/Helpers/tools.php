@@ -58,3 +58,38 @@ if ( ! function_exists('curl') )
     }
 
 }
+
+
+/**
+ * 传递文件名，返回上传的临时文件的路径
+ */
+if ( ! function_exists('getTmpImagePath') )
+{
+    function getTmpImagePath($fileName)
+    {
+        return public_path('uploads/tmp/' . $fileName . '.jpg');
+    }
+}
+
+/**
+ * 把 ID 转成路径
+ */
+if ( ! function_exists('IDToDir') )
+{
+    /**
+     * @param int $userID 用户 ID
+     * @return str ID 转化为目录的路径，如 0/00/00/01
+     */
+    function IDToDir($userID)
+    {
+        $userID = sprintf("%07d", $userID);
+        $rs = '';
+        for ($i=0; $i < 3 ; $i++) {
+            $dir = substr($userID,-2);
+            $userID = substr($userID, 0, -2);
+            $rs = $dir.'/' . $rs;
+        }
+        $dir = $userID . '/' . $rs;
+        return rtrim($dir, '/');
+    }
+}
