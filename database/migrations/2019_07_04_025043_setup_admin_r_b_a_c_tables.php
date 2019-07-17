@@ -21,6 +21,7 @@ class SetupAdminRBACTables extends Migration
             $table->string('avatar')->default('uploads/avatars/default');
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('roles', function (Blueprint $table) {

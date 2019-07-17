@@ -1,8 +1,8 @@
 <?php
 
 use App\Models\Admin;
-use App\RBAC\Models\Role;
-use App\RBAC\Models\Permission;
+use App\Models\RBAC\Role;
+use App\Models\RBAC\Permission;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
