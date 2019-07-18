@@ -39,7 +39,7 @@
                             <!-- 异常消息 -->
                             @if (count($errors) > 0)
                             <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                <ul>
+                                <ul class="mb-0">
                                     @foreach ($errors->all() as $error)
                                     <li>{{ $error }}</li>
                                     @endforeach
@@ -50,7 +50,7 @@
                             <!-- 正常消息 -->
                             @if (Session::has('message'))
                             <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                <p>{{ Session::get('message') }}</p>
+                                <p class="mb-0">{{ Session::get('message') }}</p>
                             </div>
                             @endif
 

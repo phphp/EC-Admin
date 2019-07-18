@@ -88,9 +88,6 @@
         </form>
     </div>
 
-<style>
-
-</style>
 @stop
 
 @section('css')

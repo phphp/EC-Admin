@@ -1,7 +1,7 @@
 @extends('admin/main')
 
 
-@section('title')添加管理员@stop
+@section('title')编辑管理员@stop
 
 
 @section('content')
@@ -25,7 +25,7 @@
     <div class="col-md-7">
         <form action="{{ route('admins.update', ['id'=>$admin->id]) }}" method="post" enctype="multipart/form-data" id="ajaxForm">
             {{csrf_field()}}
-            {{ method_field('PATCH') }}
+            {{ method_field('PUT') }}
 
             <div class="form-group">
                 <label>ID</label>
@@ -94,9 +94,6 @@
         </form>
     </div>
 
-<style>
-
-</style>
 @stop
 
 @section('css')

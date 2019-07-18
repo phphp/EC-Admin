@@ -45,4 +45,13 @@ Route::group([
         'index', 'create', 'store', 'show', 'edit', 'update', 'destroy'
     ]]);
 
+    // 角色
+    Route::resource('roles', 'RoleController', ['only' => [
+        'index', 'create', 'store', 'show', 'edit', 'update', 'destroy'
+    ]]);
+
+    // 权限
+    Route::resource('permissions', 'PermissionController', ['only' => [
+        'index', 'create', 'store', 'show', 'edit', 'update', 'destroy'
+    ]]);
 });
