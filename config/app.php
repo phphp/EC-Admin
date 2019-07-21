@@ -167,6 +167,7 @@ return [
         /*
          * Package Service Providers...
          */
+        Cblink\Region\RegionServiceProvider::class, // https://github.com/cblink/region 省市区联动
 
         /*
          * Application Service Providers...
