@@ -13,8 +13,9 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'App\Events\Event' => [
-            'App\Listeners\EventListener',
+        // 生成头像
+        'App\Events\CreateAvatar' => [
+            'App\Listeners\CreateAvatarListener',
         ],
     ];
 

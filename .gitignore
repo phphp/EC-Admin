@@ -12,3 +12,5 @@ yarn-error.log
 .env
 
 _docs
+/public/uploads/avatars/admin
+/public/uploads/tmp

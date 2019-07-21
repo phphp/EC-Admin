@@ -18,15 +18,15 @@ class SetupAdminRBACTables extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
-            $table->string('avatar')->default('default');
+            $table->string('avatar')->default('uploads/avatars/default');
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('roles', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->unique();
-            $table->integer('sort')->unsigned()->nullable();
             $table->timestamps();
         });
 
@@ -35,7 +35,6 @@ class SetupAdminRBACTables extends Migration
             $table->string('name')->unique();
             $table->string('action', 20);
             $table->string('uri');
-            $table->integer('sort')->unsigned()->nullable();
             $table->timestamps();
         });
 

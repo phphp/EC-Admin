@@ -2,12 +2,13 @@
 
 namespace App\Models\RBAC;
 
+use App\Models\RBAC\Base;
 use Illuminate\Database\Eloquent\Model;
 
-class Role extends Model
+class Role extends Base
 {
     protected $fillable = [
-        'name', 'sort',
+        'name',
     ];
 
     public function permissions()

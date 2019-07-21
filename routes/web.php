@@ -10,6 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+\DB::enableQueryLog();
 
 Route::get('/', function () {
     return view('welcome');
@@ -31,11 +32,27 @@ Route::post('/admin', [
 // 后台功能
 Route::group([
     'prefix' 		=> 'admin',
-    'middleware'    => ['auth:admin']
+    // 'middleware'    => ['auth:admin']
+    'middleware'    => ['auth:admin', 'checkPermission']
 ], function () {
     // 后台首页
     Route::get('dashboard', [
         'as'			=> 'dashboard',
         'uses' 			=> 'DashboardController@index'
     ]);
+
+    // 管理员
+    Route::resource('admins', 'AdminController', ['only' => [
+        'index', 'create', 'store', 'show', 'edit', 'update', 'destroy'
+    ]]);
+
+    // 角色
+    Route::resource('roles', 'RoleController', ['only' => [
+        'index', 'create', 'store', 'show', 'edit', 'update', 'destroy'
+    ]]);
+
+    // 权限
+    Route::resource('permissions', 'PermissionController', ['only' => [
+        'index', 'create', 'store', 'show', 'edit', 'update', 'destroy'
+    ]]);
 });
