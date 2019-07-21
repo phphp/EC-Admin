@@ -32,7 +32,8 @@ Route::post('/admin', [
 // 后台功能
 Route::group([
     'prefix' 		=> 'admin',
-    'middleware'    => ['auth:admin']
+    // 'middleware'    => ['auth:admin']
+    'middleware'    => ['auth:admin', 'checkPermission']
 ], function () {
     // 后台首页
     Route::get('dashboard', [

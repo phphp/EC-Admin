@@ -40,11 +40,12 @@ class PermissionController extends Controller
         $this->validate($request, [
             'name'      => 'required|string|max:255|unique:permissions',
             'action'    => ['required', 'string', Rule::in(['GET', 'POST', 'PUT', 'DELETE'])],
-            'uri'       => 'required|string|max:255|unique:permissions',
+            'uri'       => 'required|string|max:255',
         ]);
 
         $permission = new Permission($request->all());
         $permission->save();
+        $permission->clearRbacCache();
 
         // 根据新用户 id 确定生成头像路径
         return redirect()->route('permissions.index')->with('message', '添加成功');
@@ -84,11 +85,12 @@ class PermissionController extends Controller
         $this->validate($request, [
             'name'      => 'required|string|max:255|unique:permissions,name,' . $permission->id,
             'action'    => ['required', 'string', Rule::in(['GET', 'POST', 'PUT', 'DELETE'])],
-            'uri'       => 'required|string|max:255|unique:permissions,uri,' . $permission->id,
+            'uri'       => 'required|string|max:255',
         ]);
 
         $permission->fill($request->input());
         $permission->save();
+        $permission->clearRbacCache();
         return redirect()->route('permissions.index')->with('message', '修改成功');
     }
 
@@ -102,6 +104,7 @@ class PermissionController extends Controller
     {
         $permission->delete();
         $permission->roles()->detach();
+        $permission->clearRbacCache();
         return redirect()->route('permissions.index')->with('message', '删除成功');
     }
 }

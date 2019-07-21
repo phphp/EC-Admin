@@ -7,6 +7,7 @@ use Cache;
 use Closure;
 use App\Models\Admin;
 use App\Models\RBAC\Permission;
+use Illuminate\Contracts\Auth\Guard;
 
 class CheckPermission
 {
@@ -14,8 +15,9 @@ class CheckPermission
      * 根据请求 方法+地址 来确定访问的用户是否有权限继续操作
      *
      * 生产环境，会把权限-角色的映射关系缓存起来，在验证过程中只查询当前访问用户的角色。
+     * 使用一对多的角色可以加快计算速度。
      *
-     * 注意本中间件只判断权限，调用时配合 auth:admin 先检查登录状态
+     * 注意本中间件只判断权限，调用时配合 auth:admin 先检查登录状态（必须）
      * 如：'middleware' => ['auth:admin', 'checkPermission'],
      *
      * @param  \Illuminate\Http\Request  $request
@@ -28,11 +30,11 @@ class CheckPermission
         $requestUri = $request->route()->uri; // request uri：api/v0/admin/permissions/{permission}
 
         // 当前管理员的相关角色
-        $adminRoles = Admin::find($request->user()->id)->roles;
+        $adminRoles = \Auth::user()->roles; // 获取当前认证用户的实例，即便 admin guard 也是用 user()
 
-        // 排序为1的是 root 不用检查权限
+        // ID 为1的 root 不用检查权限
         foreach ( $adminRoles as $role ) {
-            if( $role->sort == 1 ) return $next($request);
+            if( $role->id == 1 ) return $next($request);
         }
 
         // 获取缓存
@@ -51,8 +53,8 @@ class CheckPermission
                 }
             }
 
-            if (! config('app.debug'))
-                Cache::put('uriWithRoles', $uriWithRoles, 60*24); // 24h
+            // if (! config('app.debug'))
+            Cache::put('uriWithRoles', $uriWithRoles, 60*24); // 24h
         }
         // 当前访问地址没有设置访问权限，使用时避免这样用了权限中间件又没设置的情况
         if ( ! isset($uriWithRoles[$requestAction.','.$requestUri]) )

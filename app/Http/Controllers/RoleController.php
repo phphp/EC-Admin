@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\RBAC\Role;
 use Illuminate\Http\Request;
 use App\Models\RBAC\Permission;
+use Illuminate\Support\Facades\Cache;
 
 class RoleController extends Controller
 {
@@ -16,7 +17,12 @@ class RoleController extends Controller
     public function index()
     {
         $permissions = Permission::all();
-        $roles = Role::all();
+        if ( Cache::has('rolesWithPermissions') )
+            $roles = Cache::get('rolesWithPermissions');
+        else {
+            $roles = Role::with('permissions')->get();
+            Cache::put('rolesWithPermissions', $roles, 60*24);
+        }
         return view('admin/role/index', compact('permissions', 'roles'));
     }
 
@@ -47,6 +53,8 @@ class RoleController extends Controller
         $role->save();
 
         $role->permissions()->attach($request->permissions);
+
+        $role->clearRbacCache();
 
         return redirect()->route('roles.index')->with('message', '添加成功');
     }
@@ -91,6 +99,7 @@ class RoleController extends Controller
         $role->name = $request->name;
         $role->save();
         $role->permissions()->sync($request->permissions);
+        $role->clearRbacCache();
         return redirect()->route('roles.index')->with('message', '修改成功');
     }
 
@@ -104,6 +113,7 @@ class RoleController extends Controller
     {
         $role->permissions()->detach();
         $role->delete();
+        $role->clearRbacCache();
         return redirect()->route('roles.index')->with('message', '删除成功');
     }
 }
