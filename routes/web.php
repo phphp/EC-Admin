@@ -59,4 +59,8 @@ Route::group([
     // 地址
     Route::get('regions', 'RegionController@index')->name('regions.index');
     Route::get('regions/list', 'RegionController@list')->name('regions.list');
+
+    // 设置
+    Route::get('setting', 'SettingController@index')->name('setting.index');
+
 });

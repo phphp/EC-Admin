@@ -1,8 +1,8 @@
-<nav class="navbar navbar-dark bg-dark flex-sm-nowrap p-0">
+<nav class="navbar navbar-dark bg-primary flex-sm-nowrap p-0">
 
     <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">{{ config('app.name') }}</a>
 
-    <input class="form-control form-control-dark bg-dark border-0 w-100" type="text" placeholder="Search">
+    <input class="nav-search iconfont form-control form-control-dark bg-transparent border-0 w-100 text-light" type="text" placeholder="&#xe82e;">
 
     <div class="dropdown">
         <button class="btn dropdown-toggle text-light iconfont icon-user-circle"

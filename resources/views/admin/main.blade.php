@@ -9,9 +9,12 @@
         <meta name="_token" content="{{ csrf_token() }}">
         <title>@yield('title') - 后台</title>
         <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
-        {{-- <link rel="stylesheet" href="https://cdn.staticfile.org/bootswatch/4.3.1/sandstone/bootstrap.min.css"> --}}
-
-        <link rel="stylesheet" href="//at.alicdn.com/t/font_1279413_cf3al7mnv3i.css">
+        <?php if (isset($_COOKIE['bs_theme']) && preg_match("/^[a-z]+$/", $_COOKIE['bs_theme'])) { ?>
+            <link id="bs-theme" rel="stylesheet" href="https://cdn.staticfile.org/bootswatch/4.3.1/{{ $_COOKIE['bs_theme'] }}/bootstrap.min.css">
+        <?php } else { ?>
+            <link id="bs-theme" rel="stylesheet">
+        <?php } ?>
+        <link rel="stylesheet" href="//at.alicdn.com/t/font_1279413_eq0hmox85oc.css">
 
         <link rel="stylesheet" href="{{ asset('/css/admin.css') }}">
 

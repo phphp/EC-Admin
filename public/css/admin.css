@@ -6,3 +6,6 @@
 #side-nav .active {
 
 }
+.nav-search::placeholder {
+    color: #F2F2F2;
+}
