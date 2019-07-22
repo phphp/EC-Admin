@@ -55,4 +55,8 @@ Route::group([
     Route::resource('permissions', 'PermissionController', ['only' => [
         'index', 'create', 'store', 'show', 'edit', 'update', 'destroy'
     ]]);
+
+    // 地址
+    Route::get('regions', 'RegionController@index')->name('regions.index');
+    Route::get('regions/list', 'RegionController@list')->name('regions.list');
 });
