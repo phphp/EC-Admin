@@ -15,7 +15,7 @@
     <a class="nav-link" href="#"><i class="iconfont icon-cc-dot-o"></i> Banner 设定</a>
 </div>
 
-<a class="nav-link" data-toggle="collapse" href="#"><i class="iconfont icon-map-fill"></i> 省市区</a>
+<a class="nav-link" href="{{ route('regions.index') }}"><i class="iconfont icon-map-fill"></i> 省市区</a>
 
 <a class="nav-link" data-toggle="collapse" href="#"><i class="iconfont icon-cog-fill"></i> 设置</a>
 
