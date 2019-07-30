@@ -47,13 +47,12 @@
         // set or remove cookie
         var date = new Date();
         if (this.value == 'default') {
-            date.setTime(date.getTime() - 3600*24*365);
+            date.setTime(date.getTime() - 1000*3600*24*365);
         } else {
-            date.setTime(date.getTime() + 3600*24*365);
+            date.setTime(date.getTime() + 1000*3600*24*365);
         }
         var expires = "; expires=" + date.toUTCString();
         document.cookie = "bs_theme=" + this.value.toLowerCase() + expires + "; path=/";
-
     })
 </script>
 

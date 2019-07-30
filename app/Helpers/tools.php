@@ -93,3 +93,16 @@ if ( ! function_exists('IDToDir') )
         return rtrim($dir, '/');
     }
 }
+
+/**
+ * 按天
+ */
+if ( ! function_exists('getImageUploadsPath') )
+{
+    function getImageUploadsPath()
+    {
+        $datePath = date('Y/W/');
+        // $fileName = md5(time()+rand(1, 100000000));
+        return 'uploads/images/' . $datePath; // . $fileName . '.' . $extension;
+    }
+}

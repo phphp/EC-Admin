@@ -63,4 +63,8 @@ Route::group([
     // 设置
     Route::get('setting', 'SettingController@index')->name('setting.index');
 
+    // 权限
+    Route::resource('image', 'ImageController', ['only' => [
+        'index', 'create', 'store', 'show', 'edit', 'update', 'destroy'
+    ]]);
 });
