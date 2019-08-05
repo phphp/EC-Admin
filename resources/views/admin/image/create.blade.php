@@ -36,20 +36,24 @@
 
             <div class="form-group">
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="internal" id="inlineRadio1" value="1" checked>
+                    <input class="form-check-input" type="radio" name="internal" id="inlineRadio1" value="1" checked autocomplete="off">
                     <label class="form-check-label" for="inlineRadio1">内部图片</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="internal" id="inlineRadio2" value="0">
+                    <input class="form-check-input" type="radio" name="internal" id="inlineRadio2" value="0" autocomplete="off">
                     <label class="form-check-label" for="inlineRadio2">外部图片</label>
                 </div>
             </div>
 
-            <div class="form-group">
+            <div class="form-group" id="inlineRadio1-content">
                 <div class="input-group">
                     <input type="file" name="image" multiple="multiple" class="custom-file-input" id="selectNewFile">
                     <label class="custom-file-label" for="selectNewFile">选择图像</label>
                 </div>
+            </div>
+
+            <div class="form-group" id="inlineRadio2-content" style="display: none">
+                <input type="text" class="form-control" name="src" placeholder="外部图片地址" value="{{old('src')}}">
             </div>
 
             <button type="submit" id="submit" class="btn btn-primary">添加</button>
@@ -64,6 +68,15 @@
         // 设置 bs 输入框名称
         let fileName = e.target.files[0].name;
         $('.custom-file-label').html(fileName);
+    });
+
+    $('#inlineRadio1').click(function(e){
+        $('#inlineRadio1-content').css('display', 'block');
+        $('#inlineRadio2-content').css('display', 'none');
+    });
+    $('#inlineRadio2').click(function(e){
+        $('#inlineRadio1-content').css('display', 'none');
+        $('#inlineRadio2-content').css('display', 'block');
     });
 </script>
 @stop
