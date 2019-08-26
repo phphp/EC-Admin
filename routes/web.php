@@ -63,4 +63,13 @@ Route::group([
     // 设置
     Route::get('setting', 'SettingController@index')->name('setting.index');
 
+    // 图片
+    Route::resource('image', 'ImageController', ['only' => [
+        'index', 'create', 'store', 'show', 'edit', 'update', 'destroy'
+    ]]);
+
+    // banner
+    Route::resource('banner', 'BannerController', ['only' => [
+        'index', 'create', 'store', 'show', 'edit', 'update', 'destroy'
+    ]]);
 });

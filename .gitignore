@@ -14,3 +14,4 @@ yarn-error.log
 _docs
 /public/uploads/avatars/admin
 /public/uploads/tmp
+/public/uploads/images

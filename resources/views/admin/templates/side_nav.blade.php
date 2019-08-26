@@ -11,8 +11,8 @@
 
 <a class="nav-link" data-toggle="collapse" href="#nav-image"><i class="iconfont icon-picture-fill"></i> 图片资源</a>
 <div id="nav-image" class="collapse in">
-    <a class="nav-link" href="#"><i class="iconfont icon-cc-dot-o"></i> 所有图片</a>
-    <a class="nav-link" href="#"><i class="iconfont icon-cc-dot-o"></i> Banner 设定</a>
+    <a class="nav-link" href="{{ route('image.index') }}"><i class="iconfont icon-cc-dot-o"></i> 所有图片</a>
+    <a class="nav-link" href="{{ route('banner.index') }}"><i class="iconfont icon-cc-dot-o"></i> Banner 设定</a>
 </div>
 
 <a class="nav-link" href="{{ route('regions.index') }}"><i class="iconfont icon-map-fill"></i> 省市区</a>
