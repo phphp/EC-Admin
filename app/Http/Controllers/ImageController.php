@@ -159,6 +159,7 @@ class ImageController extends Controller
     public function destroy(Image $image)
     {
         Storage::disk('public')->delete($image->getOriginal('src'));
+        $image->banners()->detach();
         $image->delete();
         return redirect()->route('image.index')->with('message', '删除成功');
     }

@@ -18,4 +18,8 @@ class Image extends Model
         if ( 0 === $this->internal ) return $value;
         else return config('app.url') . '/' . $value;
     }
+
+    public function banners() {
+        return $this->belongsToMany('App\Models\Banner', 'banner_image', 'image_id', 'banner_id');
+    }
 }

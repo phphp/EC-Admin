@@ -102,8 +102,8 @@ class PermissionController extends Controller
      */
     public function destroy(Permission $permission)
     {
-        $permission->delete();
         $permission->roles()->detach();
+        $permission->delete();
         $permission->clearRbacCache();
         return redirect()->route('permissions.index')->with('message', '删除成功');
     }

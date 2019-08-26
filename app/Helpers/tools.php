@@ -101,7 +101,7 @@ if ( ! function_exists('getImageUploadsPath') )
 {
     function getImageUploadsPath()
     {
-        $datePath = date('Y/W/');
+        $datePath = date('Y/W');
         // $fileName = md5(time()+rand(1, 100000000));
         return 'uploads/images/' . $datePath; // . $fileName . '.' . $extension;
     }
