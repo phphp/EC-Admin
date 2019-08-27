@@ -46,6 +46,11 @@ Route::group([
         'index', 'create', 'store', 'show', 'edit', 'update', 'destroy'
     ]]);
 
+    // 管理员状态
+    Route::get('profile', 'AdminController@profile')->name('admin.profile');
+    Route::put('profile', 'AdminController@updateProfile')->name('admin.update.profile');
+    Route::post('logout', 'AdminLoginController@logout')->name('admin.logout');
+
     // 角色
     Route::resource('roles', 'RoleController', ['only' => [
         'index', 'create', 'store', 'show', 'edit', 'update', 'destroy'

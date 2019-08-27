@@ -56,9 +56,10 @@ class AdminController extends Controller
         // 如果有上传头像，则设置头像
         // 5.5 中 request->has 只检查是否有键，即便值是 false
         // filled 需要有键同时值不为空
-        if ( $request->filled('avatarL') && $request->filled('avatarM') && $request->filled('avatarS') )
+        if ( $request->filled('avatarL') && $request->filled('avatarM') && $request->filled('avatarS') ) {
             $avatarPath = event(new CreateAvatar($admin));
-        $admin->avatar = $avatarPath[0]; // listener 返回会套上一个数组
+            $admin->avatar = $avatarPath[0]; // listener 返回会套上一个数组
+        }
         $admin->save();
 
         // 根据新用户 id 确定生成头像路径
@@ -114,14 +115,15 @@ class AdminController extends Controller
 
         $admin->fill($request->input());
 
-        if ( $request->filled('avatarL') && $request->filled('avatarM') && $request->filled('avatarS') )
+        if ( $request->filled('avatarL') && $request->filled('avatarM') && $request->filled('avatarS') ) {
             $avatarPath = event(new CreateAvatar($admin)); // 即使有旧头像也会覆盖掉
 
-        // 用户之前用的是默认头像，需要设置成新的。有设置头像的话，则不变，因为路径不会变的
-        if ( $avatarPath[0] != $admin->avatar ) {
-            $admin->avatar = $avatarPath[0];
-            $admin->save();
+            // 用户之前用的是默认头像，需要设置成新的。有设置头像的话，则不变，因为路径不会变的
+            if ( $avatarPath[0] != $admin->avatar ) {
+                $admin->avatar = $avatarPath[0];
+            }
         }
+        $admin->save();
 
         // $admin->roles()->sync($request->roles); // 更新关联数据
 
@@ -142,4 +144,42 @@ class AdminController extends Controller
         return redirect()->route('admins.index')->with('message', '删除成功');
     }
 
+    public function profile()
+    {
+        $admin = \Auth::user();
+        return view('admin/admin/profile', compact('admin'));
+    }
+
+    public function updateProfile(Request $request)
+    {
+        $admin = \Auth::user();
+        $this->validate($request, [
+            'name'          => 'required|string|max:255|unique:admins,name,'.$admin->id,
+            'email'         => 'required|string|email|max:255|unique:admins,email,'.$admin->id,
+            'password'      => 'nullable|min:6|max:60',
+            'avatarL'       => 'nullable|image_base64|max:100000',
+            'avatarM'       => 'nullable|image_base64|max:750000',
+            'avatarS'       => 'nullable|image_base64|max:500000',
+        ]);
+
+        // 是否更新密码
+        if ( $request->filled('password') )
+            $request->merge(['password' => bcrypt($request->password)]);
+        else
+            $request->offsetUnset('password');
+
+        $admin->fill($request->input());
+
+        if ( $request->filled('avatarL') && $request->filled('avatarM') && $request->filled('avatarS') ) {
+            $avatarPath = event(new CreateAvatar($admin)); // 即使有旧头像也会覆盖掉
+
+            // 用户之前用的是默认头像，需要设置成新的。有设置头像的话，则不变，因为路径不会变的
+            if ( $avatarPath[0] != $admin->avatar ) {
+                $admin->avatar = $avatarPath[0];
+            }
+        }
+        $admin->save();
+
+        return json( $admin, 201 );
+    }
 }

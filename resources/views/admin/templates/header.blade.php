@@ -10,9 +10,12 @@
             username
         </button>
         <div class="dropdown-menu dropdown-menu-right">
-            <a class="dropdown-item" href="#">个人信息</a>
+            <a class="dropdown-item" href="{{ route('admin.profile') }}">个人信息</a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">登出</a>
+            <form action="{{ route('admin.logout') }}" method="post">
+                {{csrf_field()}}
+                <button class="dropdown-item" href="#">登出</button>
+            </form>
         </div>
     </div>
 
