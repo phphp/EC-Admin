@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Admin;
+use App\Models\RBAC\Role;
 use App\Events\CreateAvatar;
 use Illuminate\Http\Request;
 
@@ -26,7 +27,8 @@ class AdminController extends Controller
      */
     public function create()
     {
-        return view('admin/admin/create');
+        $roles = Role::all();
+        return view('admin/admin/create', compact('roles'));
     }
 
     /**
@@ -42,7 +44,7 @@ class AdminController extends Controller
             'name'          => 'required|string|max:255|unique:admins',
             'email'         => 'required|string|email|max:255|unique:admins',
             'password'      => 'required|min:6|max:60',
-            // 'roles.*'       => 'integer|distinct|exists:roles,id',
+            'roles.*'       => 'integer|distinct|exists:roles,id',
             'avatarL'       => 'nullable|image_base64|max:100000', // base64 的大小约为图片的 4/3，大约允许 100kb 的上传文件
             'avatarM'       => 'nullable|image_base64|max:750000',
             'avatarS'       => 'nullable|image_base64|max:500000',
@@ -61,6 +63,9 @@ class AdminController extends Controller
             $admin->avatar = $avatarPath[0]; // listener 返回会套上一个数组
         }
         $admin->save();
+
+        // attach roles
+        $admin->roles()->attach($request->roles);
 
         // 根据新用户 id 确定生成头像路径
         return json($admin, 201);
@@ -85,7 +90,8 @@ class AdminController extends Controller
      */
     public function edit(Admin $admin)
     {
-        return view('admin/admin/edit', compact('admin'));
+        $roles = Role::all();
+        return view('admin/admin/edit', compact('admin', 'roles'));
     }
 
     /**
@@ -101,7 +107,7 @@ class AdminController extends Controller
             'name'          => 'required|string|max:255|unique:admins,name,'.$admin->id,
             'email'         => 'required|string|email|max:255|unique:admins,email,'.$admin->id,
             'password'      => 'nullable|min:6|max:60',
-            // 'roles.*'       => 'integer|distinct|exists:roles,id',
+            'roles.*'       => 'integer|distinct|exists:roles,id',
             'avatarL'       => 'nullable|image_base64|max:100000',
             'avatarM'       => 'nullable|image_base64|max:750000',
             'avatarS'       => 'nullable|image_base64|max:500000',
@@ -125,7 +131,7 @@ class AdminController extends Controller
         }
         $admin->save();
 
-        // $admin->roles()->sync($request->roles); // 更新关联数据
+        $admin->roles()->sync($request->roles); // 更新关联数据
 
         return json( $admin, 201 );
     }
@@ -140,6 +146,7 @@ class AdminController extends Controller
     {
         $admin = Admin::findOrFail($id);
         $admin->delete();
+        // 软删除，保留关联数据，只有在删除 role 的时候 detach admin
 
         return redirect()->route('admins.index')->with('message', '删除成功');
     }

@@ -66,6 +66,19 @@
                     </div>
                 </div>
 
+                <div class="form-group">
+                    <label>选择角色</label>
+                    @foreach ( $roles as $v )
+                    <label class="checkbox-inline" title="{{ $v['name'] }}" style="display:block">
+                        <input
+                        @if ( $admin->roles->contains($v->id) )
+                            checked="checked"
+                        @endif
+                        type="checkbox" name="roles[]" value="{{ $v->id }}"> {{ $v->name }}
+                    </label>
+                    @endforeach
+                </div>
+
                 <hr>
                 <div class="form-group">
                     <div class="input-group">

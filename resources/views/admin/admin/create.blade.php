@@ -38,6 +38,16 @@
                 <input type="password" class="form-control" name="password" placeholder="password" required="required">
             </div>
 
+            <div class="form-group">
+                <label>选择角色</label>
+                @foreach ( $roles as $v )
+                <label class="checkbox-inline" title="{{ $v['url'] }}" style="display:block">
+                    <input type="checkbox" name="roles[]" value="{{ $v->id }}"> {{ $v->name }}
+                </label>
+                @endforeach
+            </div>
+
+
             <hr>
             <div class="form-group">
                 <label>头像</label>

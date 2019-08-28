@@ -15,4 +15,9 @@ class Role extends Base
     {
         return $this->belongsToMany('App\Models\RBAC\Permission');
     }
+
+    public function admins()
+    {
+        return $this->belongsToMany('App\Models\Admin');
+    }
 }

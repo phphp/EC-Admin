@@ -111,7 +111,8 @@ class RoleController extends Controller
      */
     public function destroy(Role $role)
     {
-        $role->permissions()->detach();
+        $role->permissions()->detach(); // detach permissions
+        $role->admins()->detach(); // detach admins
         $role->delete();
         $role->clearRbacCache();
         return redirect()->route('roles.index')->with('message', '删除成功');
