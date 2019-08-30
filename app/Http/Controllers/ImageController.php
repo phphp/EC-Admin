@@ -163,4 +163,17 @@ class ImageController extends Controller
         $image->delete();
         return redirect()->route('image.index')->with('message', '删除成功');
     }
+
+    /**
+     * 搜索图片
+     */
+    public function search(Request $request)
+    {
+        $q = $request->input('q', false);
+        if ( ! $q ) return redirect()->route('image.index')->withErrors('请输入需要查询的关键词');
+
+        $images = Image::where('id', '=', $request->q)
+                    ->paginate(10);
+        return view('admin/image/index', compact('images', 'q'));
+    }
 }

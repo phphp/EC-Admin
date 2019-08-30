@@ -189,4 +189,19 @@ class AdminController extends Controller
 
         return json( $admin, 201 );
     }
+
+    /**
+     * 搜索用户
+     */
+    public function search(Request $request)
+    {
+        $q = $request->input('q', false);
+        if ( ! $q ) return redirect()->route('admins.index')->withErrors('请输入需要查询的关键词');
+
+        $admins = Admin::where('id', '=', $request->q)
+                    ->orWhere('name', 'like', "{$request->q}%")
+                    ->orWhere('email', 'like', "%{$request->q}%")
+                    ->paginate(20);
+        return view('admin/admin/index', compact('admins', 'q'));
+    }
 }

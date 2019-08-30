@@ -3,6 +3,15 @@
 
 @section('title')图片列表@stop
 
+@section('nav-search')
+    @if (isset($q))
+{{ $q }}
+    @else
+ID
+    @endif
+@stop
+@section('nav-search-action'){{route('image.search')}}@stop
+
 
 @section('content')
 
@@ -31,6 +40,7 @@
             <thead class="thead-light">
                 <tr>
                     <th scope="col">#</th>
+                    <th scope="col">图片</th>
                     <th scope="col">title</th>
                     <th scope="col">alt</th>
                     <th scope="col">内部图片</th>
@@ -40,6 +50,7 @@
             <tbody>
                 @foreach ($images as $image)
                 <tr>
+                    <th>{{ $image->id }}</th>
                     <th scope="row">
                         <a href="{{ $image->src }}" target="_blank">
                             <img width=50 height=50 style="object-fit: contain"

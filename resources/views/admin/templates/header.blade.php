@@ -2,12 +2,19 @@
 
     <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">{{ config('app.name') }}</a>
 
-    <input class="nav-search iconfont form-control form-control-dark bg-transparent border-0 w-100 text-light" type="text" placeholder="&#xe82e;">
+
+    @if (trim($__env->yieldContent('nav-search')))
+    <form class="w-100" action="@yield('nav-search-action')" method="GET">
+        <input class="nav-search iconfont form-control form-control-dark bg-transparent border-0 w-100 text-light"
+            type="text" placeholder="&#xe82e; @yield('nav-search')" name="q" required>
+    </form>
+    @endif
+
 
     <div class="dropdown">
         <button class="btn dropdown-toggle text-light iconfont icon-user-circle"
             type="button" data-toggle="dropdown">
-            username
+            {{\Auth::user()->name}}
         </button>
         <div class="dropdown-menu dropdown-menu-right">
             <a class="dropdown-item" href="{{ route('admin.profile') }}">个人信息</a>

@@ -3,6 +3,14 @@
 
 @section('title')管理员列表@stop
 
+@section('nav-search')
+    @if (isset($q))
+{{ $q }}
+    @else
+ID / 名称 / 邮箱
+    @endif
+@stop
+@section('nav-search-action'){{route('admins.search')}}@stop
 
 @section('content')
 

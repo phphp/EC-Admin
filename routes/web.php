@@ -42,6 +42,7 @@ Route::group([
     ]);
 
     // 管理员
+    Route::get('admins/search', 'AdminController@search')->name('admins.search');
     Route::resource('admins', 'AdminController', ['only' => [
         'index', 'create', 'store', 'show', 'edit', 'update', 'destroy'
     ]]);
@@ -69,6 +70,7 @@ Route::group([
     Route::get('setting', 'SettingController@index')->name('setting.index');
 
     // 图片
+    Route::get('image/search', 'ImageController@search')->name('image.search');
     Route::resource('image', 'ImageController', ['only' => [
         'index', 'create', 'store', 'show', 'edit', 'update', 'destroy'
     ]]);

@@ -22,6 +22,7 @@ class SetupAdminRBACTables extends Migration
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
+            $table->index('name');
         });
 
         Schema::create('roles', function (Blueprint $table) {
